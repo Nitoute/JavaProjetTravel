@@ -15,4 +15,11 @@ public class Reservation {
 		id = ID_RESERVATION.getAndIncrement();
 	}
 	
+	public void setClient(Client c){
+		this.client = c;
+	}
+	
+	public void rajouterVol(Vol v){
+		vols.add(v);
+	}
 }

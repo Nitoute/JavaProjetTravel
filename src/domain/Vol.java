@@ -6,13 +6,13 @@ public class Vol {
 	int numeroVol;
 	Destination depart;
 	Destination destination;
-	//Date date;
+	Date date;
 	int nbrPlace;
 	
-	public Vol(Destination depart, Destination destination/*, Date date*/, int nbrPlaceInit){
+	public Vol(Destination depart, Destination destination, Date date, int nbrPlaceInit){
 		this.depart = depart;
 		this.destination = destination;
-		//this.date = date;
+		this.date = date;
 		this.nbrPlace = nbrPlaceInit;
 	}
 	

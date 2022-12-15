@@ -23,4 +23,8 @@ public class CompagnieAerienne {
 		}
 		return false;
 	}
+	
+	ArrayList<Vol> getListeVol(){
+		return listeVol;
+	}
 }

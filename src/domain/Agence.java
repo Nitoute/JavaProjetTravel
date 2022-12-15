@@ -30,6 +30,7 @@ public class Agence {
 	}
 	
 	ArrayList<Destination> trouverDestination(Destination dest, Destination depart){
+		
 		for (CompagnieAerienne i:compagnieAerienne){
 			if (i.destinationExiste(dest)){
 				ArrayList<Destination> planDeVol = new ArrayList<Destination>();
@@ -39,7 +40,7 @@ public class Agence {
 					return planDeVol;
 				}
 				else{
-					System.out.println("Rip bozo");
+					System.out.println("Impossible d'atteindre votre destination");
 					return null;
 				}
 			}
@@ -69,5 +70,9 @@ public class Agence {
 			}
 		}
 		return planDeVol;
+	}
+	
+	ArrayList<CompagnieAerienne> getListeCompagnie(){
+		return compagnieAerienne;
 	}
 }
