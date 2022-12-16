@@ -98,8 +98,10 @@ public class MyApp {
 						switch(service){
 							case "simple":
 								Reservation simpleReservation = new Reservation();
+								Service serviceSimple = new ServiceSimple();
 								simpleReservation.setClient(cl);
 								simpleReservation.setDate(new Date());
+								simpleReservation.setService(serviceSimple);
 								for (Vol v : listVol){
 									System.out.println("Vol : de "+ v.getDepart().getLieu() +" à " + v.getDestination().getLieu() + " le " + v.getDate());
 									System.out.println("Vous voulez un ticket premiere (1) classe ou seconde (2) classe ?");
@@ -108,6 +110,8 @@ public class MyApp {
 									simpleReservation.rajouterTicket(currentTicket);
 									repo.save(simpleReservation, cl.getId());
 								}
+							case "luxe":
+								Reservation reservationLuxe = new Reservation();
 						}
 					}
 				}

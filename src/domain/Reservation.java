@@ -10,6 +10,7 @@ public class Reservation {
 	private Date date;
 	private ArrayList<TicketAvion> vols = new ArrayList<TicketAvion>();
 	private Client client;
+	private Service serv;
 	
 	public Reservation(){
 		id = ID_RESERVATION.getAndIncrement();
@@ -25,5 +26,9 @@ public class Reservation {
 	
 	public void setDate(Date d){
 		this.date = d;
+	}
+	
+	public void setService(Service s){
+		this.serv = s;
 	}
 }
