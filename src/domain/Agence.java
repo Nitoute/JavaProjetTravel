@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Agence {
 	ArrayList<Client> clients;
@@ -25,11 +26,11 @@ public class Agence {
 		service.add(serv);
 	}
 	
-	void ajouterCompagnieAerienne(CompagnieAerienne c){
+	public void ajouterCompagnieAerienne(CompagnieAerienne c){
 		compagnieAerienne.add(c);
 	}
 	
-	ArrayList<Destination> trouverDestination(Destination dest, Destination depart){
+	public ArrayList<Destination> trouverDestination(Destination dest, Destination depart){
 		
 		for (CompagnieAerienne i:compagnieAerienne){
 			if (i.destinationExiste(dest)){
@@ -70,6 +71,44 @@ public class Agence {
 			}
 		}
 		return planDeVol;
+	}
+	
+	public Destination getDestinationFromString(String dest){
+		Destination destinationFinal = null;
+		for (CompagnieAerienne ca: compagnieAerienne){
+			destinationFinal = ca.getDestinationFromString(dest);
+		}
+		return destinationFinal;
+	}
+	
+	public ArrayList<Vol> getVolWithDate(ArrayList<Destination> listDest, Date date){
+		ArrayList<Vol> volFinal = new ArrayList<Vol>();
+		for (int i=0; i<listDest.size(); i++){
+			for (CompagnieAerienne ca:compagnieAerienne){
+				for (Vol v : ca.listeVol){
+					if(v.getDate().after(date)){
+						if(v.getDepart().equals(listDest.get(i))){
+							if(v.getDestination().equals(listDest.get(i+1))){
+								if(v.getNbrPlace()>0){
+									//if (volFinal.get(volFinal.size()-1).getDate().before(v.getDate()))
+									volFinal.add(v);
+									date = v.getDate();
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return volFinal;
+	}
+	
+	public boolean verifierListeVol(ArrayList<Vol> lstVol, Destination depart, Destination arriver){
+		return(lstVol.get(0).getDepart().equals(depart) && lstVol.get(lstVol.size()-1).getDestination().equals(arriver));
+	}
+	
+	public TicketAvion genererTicket(Vol v,int classe){
+		return new TicketAvion(v,classe);
 	}
 	
 	ArrayList<CompagnieAerienne> getListeCompagnie(){

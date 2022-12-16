@@ -11,11 +11,7 @@ public class Client {
 		id = ID_CLIENT.getAndIncrement();
 	}
 	
-	void consulter(){
-		
-	}
-	
-	void ChoixVoyage(){
-		
+	public int getId(){
+		return this.id;
 	}
 }

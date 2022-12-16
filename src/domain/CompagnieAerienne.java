@@ -11,7 +11,7 @@ public class CompagnieAerienne {
 		this.nomCompagnie = nomC;
 	}
 	
-	void ajouterVol(Vol v){
+	public void ajouterVol(Vol v){
 		listeVol.add(v);
 	}
 	
@@ -26,5 +26,17 @@ public class CompagnieAerienne {
 	
 	ArrayList<Vol> getListeVol(){
 		return listeVol;
+	}
+	
+	Destination getDestinationFromString(String dest){
+		for (Vol v:listeVol){
+			if (v.getDepart().getLieu().equals(dest)){
+				return v.getDepart();
+			}
+			if (v.getDestination().getLieu().equals(dest)){
+				return v.getDestination();
+			}
+		}
+		return null;
 	}
 }

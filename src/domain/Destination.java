@@ -26,7 +26,8 @@ public class Destination {
 		return this.destinationPossible;
 	}
 	
-	String getLieu(){
+	public String getLieu(){
 		return this.lieu;
 	}
+	
 }

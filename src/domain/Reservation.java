@@ -6,10 +6,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Reservation {
 	private static final AtomicInteger ID_RESERVATION = new AtomicInteger();
-	int id;
-	Date date;
-	ArrayList<Vol> vols = new ArrayList<Vol>();
-	Client client;
+	private int id;
+	private Date date;
+	private ArrayList<TicketAvion> vols = new ArrayList<TicketAvion>();
+	private Client client;
 	
 	public Reservation(){
 		id = ID_RESERVATION.getAndIncrement();
@@ -19,7 +19,11 @@ public class Reservation {
 		this.client = c;
 	}
 	
-	public void rajouterVol(Vol v){
+	public void rajouterTicket(TicketAvion v){
 		vols.add(v);
+	}
+	
+	public void setDate(Date d){
+		this.date = d;
 	}
 }

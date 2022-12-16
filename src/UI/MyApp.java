@@ -1,6 +1,9 @@
-package domain;
+package UI;
 
 import java.util.*;
+
+import domain.*;
+import infra.RepositoryInMemory;
 
 public class MyApp {
 
@@ -44,14 +47,14 @@ public class MyApp {
 		CompagnieAerienne airAlgerie = new CompagnieAerienne("AirAlgerie");
 		travelAlgerie.ajouterCompagnieAerienne(airAlgerie);
 		
-		Vol parisBordeaux = new Vol(Paris,Bordeaux,new Date("2022/12/31"),1);
-		Vol bordeauxTokyo = new Vol(Bordeaux,Tokyo,new Date("2023/01/12"),1);
+		Vol parisBordeaux = new Vol(Paris,Bordeaux,new Date("2022/12/31"),10);
+		Vol bordeauxTokyo = new Vol(Bordeaux,Tokyo,new Date("2023/01/14"),11);
+		Vol delhiBordeaux = new Vol(Delhi,Bordeaux,new Date("2023/01/13"),5);
+		airAlgerie.ajouterVol(delhiBordeaux);
 		airAlgerie.ajouterVol(parisBordeaux);
 		airAlgerie.ajouterVol(bordeauxTokyo);
 		
-		for (Destination i:travelAlgerie.trouverDestination(Tokyo, Delhi)){
-			System.out.println("Finito : " + i.getLieu());
-		}
+		Repository repo = new RepositoryInMemory();
 		
 		boolean quit = false;
 		while (quit != true){
@@ -71,40 +74,45 @@ public class MyApp {
 				System.out.println("Ou allez vous ?");
 				String arrive= console.nextLine();
 				
-				Destination desDepart = null;
-				Destination desAr = null;
+				Destination desDepart = travelAlgerie.getDestinationFromString(depart);
+				Destination desAr = travelAlgerie.getDestinationFromString(arrive);
 				
-				for (Destination dep:dests){
-					if (dep.lieu.equals(depart)){
-						desDepart = dep;
-						for (Destination ar:dests){
-							if (ar.lieu.equals(arrive)){
-								desAr = ar;
-							}
-						}
-					}
+				ArrayList<Destination> planDeVol = travelAlgerie.trouverDestination(desAr,desDepart);
+				
+				ArrayList<Vol> listVol = travelAlgerie.getVolWithDate(planDeVol, date);
+				
+				for (Vol v:listVol){
+					System.out.println("Vol : de "+ v.getDepart().getLieu() +" à " + v.getDestination().getLieu() + " le " + v.getDate());
 				}
 				
-				if (desDepart!=null && desAr!=null){
-					ArrayList<Vol> volPerso = new ArrayList<Vol>();
+				System.out.println("Le vol est bon ?" + travelAlgerie.verifierListeVol(listVol, desDepart, desAr));
+				if (travelAlgerie.verifierListeVol(listVol, desDepart, desAr)){
+					System.out.println("Voulez vous reservez ces voles ?");
+					String decision= console.nextLine();
 					
-					for(int i=0; i<travelAlgerie.trouverDestination(Tokyo, Delhi).size();i++){
-						for (CompagnieAerienne ar:travelAlgerie.compagnieAerienne){
-							for (Vol v : ar.listeVol){
-								if (v.depart.equals(travelAlgerie.trouverDestination(Tokyo, Delhi).get(i))){
-									if(v.destination.equals(travelAlgerie.trouverDestination(Tokyo, Delhi).get(i+1))){
-										volPerso.add(v);
-									}
+					if (decision.equals("oui")){
+						System.out.println("Quel type de service voulez vous ?");
+						System.out.println("simple : vol");
+						System.out.println("luxe : vol + hotel + voiture");
+						String service= console.nextLine();
+						switch(service){
+							case "simple":
+								Reservation simpleReservation = new Reservation();
+								simpleReservation.setClient(cl);
+								simpleReservation.setDate(new Date());
+								for (Vol v : listVol){
+									System.out.println("Vol : de "+ v.getDepart().getLieu() +" à " + v.getDestination().getLieu() + " le " + v.getDate());
+									System.out.println("Vous voulez un ticket premiere (1) classe ou seconde (2) classe ?");
+									String classe= console.nextLine();
+									TicketAvion currentTicket = new TicketAvion(v,Integer.parseInt(classe));
+									simpleReservation.rajouterTicket(currentTicket);
+									repo.save(simpleReservation, cl.getId());
 								}
-							}
 						}
-					}
-					for (Vol v:volPerso){
-						System.out.println(v.depart.getLieu());
-						System.out.println(v.destination.getLieu());
 					}
 				}
 			}
 		}
 	}
 }
+
