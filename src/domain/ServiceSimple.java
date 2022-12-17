@@ -3,7 +3,7 @@ package domain;
 public class ServiceSimple extends Service{
 
 	@Override
-	int getPrice() {
+	public int getPrice() {
 		return 12;
 	}
 	

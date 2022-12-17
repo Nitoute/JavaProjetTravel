@@ -1,5 +1,5 @@
 package domain;
 
 public abstract class Service {
-	abstract int getPrice();
+	public abstract int getPrice();
 }

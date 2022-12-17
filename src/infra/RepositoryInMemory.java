@@ -4,16 +4,17 @@ import java.util.HashMap;
 
 import domain.Repository;
 import domain.Reservation;
+import domain.Client;
 
 public class RepositoryInMemory implements Repository{
-	HashMap<Integer,Reservation> mem;
+	HashMap<Client,Reservation> mem;
 	
 	public RepositoryInMemory(){
-		mem = new HashMap<Integer,Reservation>();
+		mem = new HashMap<Client,Reservation>();
 	}
 
 	@Override
-	public Reservation findReservationByUser(int id) throws Exception {
+	public Reservation findReservationByUser(Client id) throws Exception {
 		if (mem.containsKey(id)){
 			return mem.get(id);
 		}else{
@@ -22,7 +23,7 @@ public class RepositoryInMemory implements Repository{
 	}
 
 	@Override
-	public void save(Reservation r, int id) {
+	public void save(Reservation r, Client id) {
 		if (mem.containsKey(id)){
 			mem.replace(id, r);
 		}else{

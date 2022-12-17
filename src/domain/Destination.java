@@ -29,5 +29,9 @@ public class Destination {
 	public String getLieu(){
 		return this.lieu;
 	}
+
+	public String toString(){
+		return this.lieu;
+	}
 	
 }
